@@ -177,13 +177,21 @@ if [[ "$applied" == "true" ]]; then
     fi
   done
 
+  # Get apply log URL
+  apply_log_url=$(echo $check_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['attributes']['log-read-url'])")
+  echo "Apply Log URL:"
+  echo "${apply_log_url}"
+
+  # Retrieve Apply Log from the URL
+  # and output to shell and file
+  curl -s $apply_log_url | tee ${apply_id}.log
+
 fi
 
 # Remove json files
 rm apply.json
-rm configversion.json
 rm run.template.json
-rm run.json
+
 
 
 echo "Finished"
