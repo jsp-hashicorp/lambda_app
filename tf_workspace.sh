@@ -112,6 +112,8 @@ override="no"
 echo "Tarring configuration directory."
 tar -czf ${config_dir}.tar.gz -C ${config_dir} --exclude .git .
 
+code_version=$TF_VAR_code_version
+
 # Write out workspace.template.json
 cat > workspace.template.json <<EOF
 {
@@ -139,24 +141,17 @@ cat > configversion.json <<EOF
 EOF
 
 # Write out variable.template.json
-cat > variable.template.json <<EOF
+cat > variable.json <<EOF
 {
   "data": {
     "type":"vars",
     "attributes": {
-      "key":"my-key",
-      "value":"my-value",
-      "category":"my-category",
-      "hcl":my-hcl,
-      "sensitive":my-sensitive
-    }
-  },
-  "filter": {
-    "organization": {
-      "username":"my-organization"
-    },
-    "workspace": {
-      "name":"my-workspace"
+      "key":"code_version",
+      "value":"$TF_VAR_code_version",
+      "description":"some description",
+      "category":"terraform",
+      "hcl":false,
+      "sensitive":false
     }
   }
 }
@@ -200,6 +195,10 @@ echo "Workspace ID: " $workspace_id
 
 
 buildkite-agent meta-data set "workspaceid" $workspace_id
+
+#Upload variable for code version
+echo "Updating code version variable"
+upload_variable=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --data @variable.json "https://${address}/api/v2/workspaces/${workspace_id}/vars")
 
 # Create configuration version
 echo "Creating configuration version."
