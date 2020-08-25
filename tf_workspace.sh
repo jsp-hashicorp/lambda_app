@@ -201,7 +201,7 @@ buildkite-agent meta-data set "workspaceid" $workspace_id
 
 #Upload variable for code version
 echo "Updating code version variable"
-upload_variable=$(curl -s --request PATCH --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --data @variable.json "https://${address}/api/v2/workspaces/${workspace_id}/vars")
+upload_variable=$(curl -s --request PATCH --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --data @variable.json "https://${address}/api/v2/vars/var-N5GHac1MY5oXfmBw")
 
 # Create configuration version
 echo "Creating configuration version."
