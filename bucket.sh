@@ -91,6 +91,27 @@ fi
 #fi
 override="no"
 
+# Check to see if the workspace already exists
+echo "Checking to see if workspace exists"
+check_workspace_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" "https://${address}/api/v2/organizations/${organization}/workspaces/${workspace}")
+
+# Parse workspace_id from check_workspace_result
+workspace_id=$(echo $check_workspace_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
+echo "Workspace ID: " $workspace_id
+
+# Create workspace if it does not already exist
+if [ -z "$workspace_id" ]; then
+  echo "Workspace did not already exist; will create it."
+  workspace_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --request POST --data @workspace.json "https://${address}/api/v2/organizations/${organization}/workspaces")
+
+  # Parse workspace_id from workspace_result
+  workspace_id=$(echo $workspace_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
+  echo "Workspace ID: " $workspace_id
+else
+  echo "Workspace already existed."
+fi
+
+buildkite-agent meta-data set "workspaceid" $workspace_id
 
 echo "Here is the get"
 workspace_id=$(buildkite-agent meta-data get "workspaceid")
@@ -131,12 +152,22 @@ escape_string()
 
 sedDelim=$(printf '\001')
 
+# Do a run
+sed "s/workspace_id/$workspace_id/" < run.template.json  > run.json
+run_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --data @run.json https://${address}/api/v2/runs)
+
+# Parse run_result
+run_id=$(echo $run_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
+echo "Run ID: " $run_id
+
+buildkite-agent meta-data set "runid" $run_id
 
 run_id=$(buildkite-agent meta-data get "runid")
 
 echo "Doing Apply"
 apply_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --data @apply.json https://${address}/api/v2/runs/${run_id}/actions/apply)
 applied="true"
+
 
 
 
