@@ -164,8 +164,8 @@ buildkite-agent meta-data set "runid" $run_id
 
 run_id=$(buildkite-agent meta-data get "runid")
 
-echo "Doing Apply"
-apply_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --data @apply.json https://${address}/api/v2/runs/${run_id}/actions/apply)
+#echo "Doing Apply"
+#apply_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --data @apply.json https://${address}/api/v2/runs/${run_id}/actions/apply)
 applied="true"
 
 
@@ -191,6 +191,10 @@ if [[ "$applied" == "true" ]]; then
     sleep $sleep_duration
     echo "Checking apply status"
 
+    # Check run status
+    run_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" https://${address}/api/v2/runs/${run_id}?include=apply)
+    run_status=$(echo $run_result | python -c "import sys, json; print(json.load(sys.stdin['data']['status']))")
+    echo "Run Status: ${run_status}"
     # Check the apply status
     check_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" https://${address}/api/v2/applies/${apply_id})
 
@@ -201,6 +205,9 @@ if [[ "$applied" == "true" ]]; then
     # Decide whether to continue
     if [[ "$apply_status" == "finished" ]]; then
       echo "Apply finished."
+      continue=0
+    elif [["$run_status" == "planned_and_finished"]]; then
+      echo "Nothing to change."
       continue=0
     else
       # Sleep and then check apply status again in next loop
