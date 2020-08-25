@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 variable "code_version" {
-  ""
+  type = string
 }
 
 resource "aws_lambda_function" "example" {
