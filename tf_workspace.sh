@@ -78,7 +78,7 @@ sleep_duration=5
 #  config_dir="config"
 #fi
 
-config_dir="."
+config_dir="./terraform"
 
 # Set workspace if provided as the second argument
 if [ ! -z "$TFE_WORKSPACE" ]; then
@@ -109,8 +109,8 @@ fi
 override="no"
 
 # build compressed tar file from configuration directory
-#echo "Tarring configuration directory."
-#tar -czf ${config_dir}.tar.gz -C ${config_dir} --exclude .git .
+echo "Tarring configuration directory."
+tar -czf ${config_dir}.tar.gz -C ${config_dir} --exclude .git .
 
 # Write out workspace.template.json
 cat > workspace.template.json <<EOF
