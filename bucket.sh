@@ -206,7 +206,7 @@ if [[ "$applied" == "true" ]]; then
     if [[ "$apply_status" == "finished" ]]; then
       echo "Apply finished."
       continue=0
-    elif [["$run_status" == "planned_and_finished"]]; then
+    elif [[ "$run_status" == "planned_and_finished" ]]; then
       echo "Nothing to change."
       continue=0
     else
