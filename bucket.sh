@@ -193,7 +193,7 @@ if [[ "$applied" == "true" ]]; then
 
     # Check run status
     run_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" https://${address}/api/v2/runs/${run_id}?include=apply)
-    run_status=$(echo $run_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['status'])")
+    run_status=$(echo $run_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['attributes']['status'])")
     echo "Run Status: ${run_status}"
     # Check the apply status
     check_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" https://${address}/api/v2/applies/${apply_id})
