@@ -320,6 +320,10 @@ while [ $continue -ne 0 ]; do
     echo "Plan errored or hard-mandatory policy failed"
     save_plan="true"
     continue=0
+  elif [[ "$run_status" == "planned_and_finished" ]]; then
+    echo "Nothing to change."
+    save_plan="false"
+    continue=0
   else
     # Sleep and then check status again in next loop
     echo "We will sleep and try again soon."
