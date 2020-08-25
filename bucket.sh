@@ -225,7 +225,6 @@ fi
 
 # Remove json files
 rm apply.json
-rm configversion.json
 rm run.template.json
 rm run.json
 
