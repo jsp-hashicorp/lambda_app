@@ -145,6 +145,7 @@ cat > variable.json <<EOF
 {
   "data": {
     "type":"vars",
+    "id":"var-N5GHac1MY5oXfmBw",
     "attributes": {
       "key":"code_version",
       "value":"$TF_VAR_code_version",
@@ -156,6 +157,8 @@ cat > variable.json <<EOF
   }
 }
 EOF
+
+cat variable.json
 
 # Write out run.template.json
 cat > run.template.json <<EOF
@@ -198,7 +201,7 @@ buildkite-agent meta-data set "workspaceid" $workspace_id
 
 #Upload variable for code version
 echo "Updating code version variable"
-upload_variable=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --data @variable.json "https://${address}/api/v2/workspaces/${workspace_id}/vars")
+upload_variable=$(curl -s --request PATCH --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --data @variable.json "https://${address}/api/v2/workspaces/${workspace_id}/vars")
 
 # Create configuration version
 echo "Creating configuration version."
@@ -427,7 +430,6 @@ rm apply.json
 rm configversion.json
 rm run.template.json
 rm run.json
-rm variable.template.json
 rm variable.json
 rm workspace.template.json
 rm workspace.json 
