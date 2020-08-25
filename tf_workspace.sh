@@ -109,8 +109,8 @@ fi
 override="no"
 
 # build compressed tar file from configuration directory
-echo "Tarring configuration directory."
-tar -czf ${config_dir}.tar.gz -C ${config_dir} --exclude .git .
+#echo "Tarring configuration directory."
+#tar -czf ${config_dir}.tar.gz -C ${config_dir} --exclude .git .
 
 # Write out workspace.template.json
 cat > workspace.template.json <<EOF
@@ -198,17 +198,6 @@ check_workspace_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --h
 workspace_id=$(echo $check_workspace_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
 echo "Workspace ID: " $workspace_id
 
-# Create workspace if it does not already exist
-if [ -z "$workspace_id" ]; then
-  echo "Workspace did not already exist; will create it."
-  workspace_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --request POST --data @workspace.json "https://${address}/api/v2/organizations/${organization}/workspaces")
-
-  # Parse workspace_id from workspace_result
-  workspace_id=$(echo $workspace_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
-  echo "Workspace ID: " $workspace_id
-else
-  echo "Workspace already existed."
-fi
 
 buildkite-agent meta-data set "workspaceid" $workspace_id
 
