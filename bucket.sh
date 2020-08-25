@@ -220,43 +220,6 @@ if [[ "$applied" == "true" ]]; then
   echo "Apply Log URL:"
   echo "${apply_log_url}"
 
-  # Retrieve Apply Log from the URL
-  # and output to shell and file
-  curl -s $apply_log_url | tee ${apply_id}.log
-
-  # Get state version IDs from after the apply
-  state_id_before=$(echo $check_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['relationships']['state-versions']['data'][1]['id'])")
-  echo "State ID 1:" ${state_id_before}
-
-  # Call API to get information about the state version including its URL
-  state_file_before_url_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" https://${address}/api/v2/state-versions/${state_id_before})
-
-  # Get state file URL from the result
-  state_file_before_url=$(echo $state_file_before_url_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['attributes']['hosted-state-download-url'])")
-  echo "URL for state file before apply:"
-  echo ${state_file_before_url}
-
-  # Retrieve state file from the URL
-  # and output to shell and file
-  echo "State file before the apply:"
-  curl -s $state_file_before_url | tee ${apply_id}-before.tfstate
-
-  # Get state version IDs from before the apply
-  state_id_after=$(echo $check_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['relationships']['state-versions']['data'][0]['id'])")
-  echo "State ID 0:" ${state_id_after}
-
-  # Call API to get information about the state version including its URL
-  state_file_after_url_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" https://${address}/api/v2/state-versions/${state_id_after})
-
-  # Get state file URL from the result
-  state_file_after_url=$(echo $state_file_after_url_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['attributes']['hosted-state-download-url'])")
-  echo "URL for state file after apply:"
-  echo ${state_file_after_url}
-
-  # Retrieve state file from the URL
-  # and output to shell and file
-  echo "State file after the apply:"
-  curl -s $state_file_after_url | tee ${apply_id}-after.tfstate
 
 fi
 
