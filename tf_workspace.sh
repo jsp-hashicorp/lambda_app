@@ -158,7 +158,6 @@ cat > variable.json <<EOF
 }
 EOF
 
-cat variable.json
 
 # Write out run.template.json
 cat > run.template.json <<EOF
