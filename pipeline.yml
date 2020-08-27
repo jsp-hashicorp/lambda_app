@@ -1,0 +1,34 @@
+env:
+  TF_VAR_code_version: "2_0_0"
+
+steps:
+  - command: "bucket.sh"
+    label: "Bucket check"
+    env:
+      TFE_ORG: "your-org-name"
+      TFE_TOKEN: "your-TFC-token"
+      TFE_WORKSPACE: "s3-bucket-workspace"
+
+  - command: "upload.sh"
+    label: "Upload"
+    env:
+      AWS_ACCESS_KEY_ID: "you-aws-access-key"
+      AWS_SESSION_TOKEN: "your-aws-session-token"
+      AWS_SECRET_ACCESS_KEY: "yous-aws-secret"
+      AWS_SESSION_EXPIRATION: 111111111
+
+  - command: "tf_workspace.sh"
+    label: "Plan"
+    env:
+      TFE_ORG: "your-org-name"
+      TFE_TOKEN: "your-TFC-token"
+      TFE_WORKSPACE: "lambda-workspace"
+
+  - block: "Check Plan and Approve"
+
+  - command: "tf_run.sh"
+    label: "Run"
+    env:
+      TFE_ORG: "your-org-name"
+      TFE_TOKEN: "your-TFC-token"
+      TFE_WORKSPACE: "lambda-workspace"
