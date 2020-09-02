@@ -6,7 +6,7 @@ steps:
     label: "Bucket check"
     env:
       TFE_ORG: "snapshot_tf_serverless"
-      TFE_TOKEN: "xzxQGi8q4UV5IA.atlasv1.n0vfOq7E5xRlftNPvoFbyuolGqgOqrAEkMvyTJksbZjKzfzDbKkGfZw1TmobipywDAc"
+      TFE_TOKEN: "fU6YgcpG6yHxqA.atlasv1.sFPeVdPWNeMOozahdpCL4kEnuWOfy25FjIYlz68S18i5yf9p4gZqwz3ltvyR6skwNUA"
       TFE_WORKSPACE: "s3-bucket-workspace"
 
   - command: "upload.sh"
@@ -21,7 +21,7 @@ steps:
     label: "Plan"
     env:
       TFE_ORG: "snapshot_tf_serverless"
-      TFE_TOKEN: "xzxQGi8q4UV5IA.atlasv1.n0vfOq7E5xRlftNPvoFbyuolGqgOqrAEkMvyTJksbZjKzfzDbKkGfZw1TmobipywDAc"
+      TFE_TOKEN: "fU6YgcpG6yHxqA.atlasv1.sFPeVdPWNeMOozahdpCL4kEnuWOfy25FjIYlz68S18i5yf9p4gZqwz3ltvyR6skwNUA"
       TFE_WORKSPACE: "lambda-workspace"
 
   - block: "Check Plan and Approve"
@@ -30,5 +30,5 @@ steps:
     label: "Run"
     env:
       TFE_ORG: "snapshot_tf_serverless"
-      TFE_TOKEN: "xzxQGi8q4UV5IA.atlasv1.n0vfOq7E5xRlftNPvoFbyuolGqgOqrAEkMvyTJksbZjKzfzDbKkGfZw1TmobipywDAc"
+      TFE_TOKEN: "fU6YgcpG6yHxqA.atlasv1.sFPeVdPWNeMOozahdpCL4kEnuWOfy25FjIYlz68S18i5yf9p4gZqwz3ltvyR6skwNUA"
       TFE_WORKSPACE: "lambda-workspace"
