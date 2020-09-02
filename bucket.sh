@@ -132,7 +132,8 @@ fi
 buildkite-agent meta-data set "workspaceid" $workspace_id
 
 echo "Here is the get"
-workspace_id=$(buildkite-agent meta-data get $workspace_id)
+#workspace_id=$(buildkite-agent meta-data get $workspace_id)
+workspace_id = $workspace_id
 
 
 # Write out run.template.json
@@ -182,7 +183,8 @@ echo "Run ID: " $run_id
 
 buildkite-agent meta-data set "runid" $run_id
 
-run_id=$(buildkite-agent meta-data get $run_id)
+#run_id=$(buildkite-agent meta-data get $run_id)
+run_id =$run_id
 
 #echo "Doing Apply"
 #apply_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --data @apply.json https://${address}/api/v2/runs/${run_id}/actions/apply)
