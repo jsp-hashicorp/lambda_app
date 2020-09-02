@@ -93,7 +93,7 @@ override="no"
 
 # Check to see if the workspace already exists
 echo "Checking to see if workspace exists"
-check_workspace_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" "https://${address}/api/v2/organizations/${organization}/workspaces/${workspace}")
+check_workspace_result=$(curl -s --header "Authorization: Bearer ${TFE_TOKEN}" --header "Content-Type: application/vnd.api+json" "https://${address}/api/v2/organizations/${organization}/workspaces/${workspace}")
 
 # Parse workspace_id from check_workspace_result
 workspace_id=$(echo $check_workspace_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
@@ -102,7 +102,7 @@ echo "Workspace ID: " $workspace_id
 # Create workspace if it does not already exist
 if [ -z "$workspace_id" ]; then
   echo "Workspace did not already exist; will create it."
-  workspace_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --request POST --data @workspace.json "https://${address}/api/v2/organizations/${organization}/workspaces")
+  workspace_result=$(curl -s --header "Authorization: Bearer ${TFE_TOKEN}" --header "Content-Type: application/vnd.api+json" --request POST --data @workspace.json "https://${address}/api/v2/organizations/${organization}/workspaces")
 
   # Parse workspace_id from workspace_result
   workspace_id=$(echo $workspace_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
