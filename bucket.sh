@@ -163,12 +163,12 @@ EOF
 
 
 # Function to process special characters in sed
-escape_string()
-{
-  printf '%s' "$1" | sed -e 's/\([&\]\)/\\\1/g'
-}
+#escape_string()
+#{
+#  printf '%s' "$1" | sed -e 's/\([&\]\)/\\\1/g'
+#}
 
-sedDelim=$(printf '\001')
+#sedDelim=$(printf '\001')
 
 # Do a run
 sed "s/workspace_id/$workspace_id/" < run.template.json  > run.json
