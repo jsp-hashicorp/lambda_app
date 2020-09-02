@@ -5,7 +5,7 @@ steps:
   - command: "bucket.sh"
     label: "Bucket check"
     env:
-      TFE_ORG: "your-org-name"
+      TFE_ORG: "jsp_serverless"
       TFE_TOKEN: "your-TFC-token"
       TFE_WORKSPACE: "s3-bucket-workspace"
 
@@ -20,7 +20,7 @@ steps:
   - command: "tf_workspace.sh"
     label: "Plan"
     env:
-      TFE_ORG: "your-org-name"
+      TFE_ORG: "jsp_serverless"
       TFE_TOKEN: "your-TFC-token"
       TFE_WORKSPACE: "lambda-workspace"
 
@@ -29,6 +29,6 @@ steps:
   - command: "tf_run.sh"
     label: "Run"
     env:
-      TFE_ORG: "your-org-name"
+      TFE_ORG: "jsp_serverless"
       TFE_TOKEN: "your-TFC-token"
       TFE_WORKSPACE: "lambda-workspace"
