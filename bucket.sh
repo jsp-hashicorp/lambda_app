@@ -181,7 +181,7 @@ run_id=$(echo $run_result | jq -r .data.id)
 
 echo "Run ID: " $run_id
 
-buildkite-agent meta-data set "runid" $run_id
+#buildkite-agent meta-data set "runid" $run_id
 
 #run_id=$(buildkite-agent meta-data get $run_id)
 run_id =$run_id
