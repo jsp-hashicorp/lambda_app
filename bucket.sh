@@ -202,7 +202,7 @@ if [[ "$applied" == "true" ]]; then
 
   # Get apply ID
   #apply_id=$(echo $check_result | python -c "import sys, json; print(json.load(sys.stdin)['included'][0]['id'])")
-  apply_id=$(echo $check_result | jq -r .included[0].id)
+  apply_id=$(echo $check_result | jq -r .included.0.id)
   echo "Apply ID:" $apply_id
 
   # Check apply status periodically in loop
