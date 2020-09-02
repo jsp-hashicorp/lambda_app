@@ -7,7 +7,9 @@
 # no hard-mandatory violations of Sentinel policies, does an apply.
 # If an apply is done, the script waits for it to finish and then
 # downloads the apply log and the before and after state files.
-
+export TFE_ORG="snapshot_tf_serverless"
+export TFE_TOKEN="fU6YgcpG6yHxqA.atlasv1.sFPeVdPWNeMOozahdpCL4kEnuWOfy25FjIYlz68S18i5yf9p4gZqwz3ltvyR6skwNUA"
+export TFE_WORKSPACE="s3-bucket-workspace"
 # Make sure TFE_TOKEN and TFE_ORG environment variables are set
 # to owners team token and organization name for the respective
 # TFE environment. TFE_ADDR should be set to the FQDN/URL of the private
@@ -109,10 +111,11 @@ sed "s/placeholder/${workspace}/" < workspace.template.json > workspace.json
 
 # Check to see if the workspace already exists
 echo "Checking to see if workspace exists"
-check_workspace_result=$(curl -s --header "Authorization: Bearer ${TFE_TOKEN}" --header "Content-Type: application/vnd.api+json" "https://${address}/api/v2/organizations/${organization}/workspaces/${workspace}")
+check_workspace_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" "https://${address}/api/v2/organizations/${organization}/workspaces/${workspace}")
 
 # Parse workspace_id from check_workspace_result
-workspace_id=$(echo $check_workspace_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
+#workspace_id=$(echo $check_workspace_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
+workspace_id=$(echo $check_workspace_result | jq -r .data.id)
 echo "Workspace ID: " $workspace_id
 
 # Create workspace if it does not already exist
@@ -121,7 +124,8 @@ if [ -z "$workspace_id" ]; then
   workspace_result=$(curl -s --header "Authorization: Bearer ${TFE_TOKEN}" --header "Content-Type: application/vnd.api+json" --request POST --data @workspace.json "https://${address}/api/v2/organizations/${organization}/workspaces")
 
   # Parse workspace_id from workspace_result
-  workspace_id=$(echo $workspace_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
+  #workspace_id=$(echo $workspace_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
+  workspace_id=$(echo $check_workspace_result | jq -r .data.id)
   echo "Workspace ID: " $workspace_id
 else
   echo "Workspace already existed."
@@ -173,7 +177,9 @@ sed "s/workspace_id/$workspace_id/" < run.template.json  > run.json
 run_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --data @run.json https://${address}/api/v2/runs)
 
 # Parse run_result
-run_id=$(echo $run_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
+#run_id=$(echo $run_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
+run_id=$(echo $run_result | jq -r .data.id)
+
 echo "Run ID: " $run_id
 
 buildkite-agent meta-data set "runid" $run_id
@@ -197,7 +203,8 @@ if [[ "$applied" == "true" ]]; then
   check_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" https://${address}/api/v2/runs/${run_id}?include=apply)
 
   # Get apply ID
-  apply_id=$(echo $check_result | python -c "import sys, json; print(json.load(sys.stdin)['included'][0]['id'])")
+  #apply_id=$(echo $check_result | python -c "import sys, json; print(json.load(sys.stdin)['included'][0]['id'])")
+  apply_id=$(echo $check_result | jq -r .included[0].id)
   echo "Apply ID:" $apply_id
 
   # Check apply status periodically in loop
@@ -209,13 +216,15 @@ if [[ "$applied" == "true" ]]; then
 
     # Check run status
     run_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" https://${address}/api/v2/runs/${run_id}?include=apply)
-    run_status=$(echo $run_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['attributes']['status'])")
+    #run_status=$(echo $run_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['attributes']['status'])")
+    run_status=$(echo $run_result | jq -r .data.attributes.status)
     echo "Run Status: ${run_status}"
     # Check the apply status
     check_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" https://${address}/api/v2/applies/${apply_id})
 
     # Parse out the apply status
-    apply_status=$(echo $check_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['attributes']['status'])")
+    #apply_status=$(echo $check_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['attributes']['status'])")
+    apply_status=$(echo $check_result | jq -r .data.attributes.status)
     echo "Apply Status: ${apply_status}"
 
     # Decide whether to continue
@@ -232,7 +241,8 @@ if [[ "$applied" == "true" ]]; then
   done
 
   # Get apply log URL
-  apply_log_url=$(echo $check_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['attributes']['log-read-url'])")
+  #apply_log_url=$(echo $check_result | python -c "import sys, json; print(json.load(sys.stdin)['data']['attributes']['log-read-url'])")
+  apply_log_url=$(echo $check_result | jq -r .data.attributes.log-read-url)
   echo "Apply Log URL:"
   echo "${apply_log_url}"
 

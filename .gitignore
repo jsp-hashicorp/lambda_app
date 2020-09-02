@@ -1,3 +1,4 @@
 *.tfstate
 .terrraform/
 example.zip
+pipeline.yml
