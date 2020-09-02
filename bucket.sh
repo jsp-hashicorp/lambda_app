@@ -134,7 +134,7 @@ fi
 echo "Here is the get"
 #workspace_id=$(buildkite-agent meta-data get $workspace_id)
 workspace_id = $workspace_id
-
+echo "workspacid : " $workspace_id
 
 # Write out run.template.json
 cat > run.template.json <<EOF
