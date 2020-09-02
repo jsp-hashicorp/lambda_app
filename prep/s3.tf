@@ -7,6 +7,7 @@ resource "aws_s3_bucket" "lambda-bucket" {
   bucket = "jsp-lambda-code-bucket"
   acl    = "private"
 
+
   tags = {
     Name        = "jsp@hashicorp.com"
     Environment = "Dev"
