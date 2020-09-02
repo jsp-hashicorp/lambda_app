@@ -1,11 +1,11 @@
 
 resource "null_resource" "zip_file" {
- triggers = {
+  triggers = {
     always_run = "${timestamp()}"
   }
 
   provisioner "local-exec" {
-    command = "gunzip example.zip ../example/main.js"
+    command = "zip exmple.zip ../example/main.js"
   }
 }
 
