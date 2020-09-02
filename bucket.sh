@@ -134,7 +134,7 @@ fi
 echo "Here is the get"
 #workspace_id=$(buildkite-agent meta-data get $workspace_id)
 workspace_id = $workspace_id
-echo "workspacid : " $workspace_id
+echo "workspacid : " ${workspace_id}
 
 # Write out run.template.json
 cat > run.template.json <<EOF
@@ -172,7 +172,7 @@ EOF
 #sedDelim=$(printf '\001')
 
 # Do a run
-sed "s/workspace_id/$workspace_id/" < run.template.json  > run.json
+sed "s/workspace_id/${workspace_id}/" < run.template.json  > run.json
 run_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --data @run.json https://${address}/api/v2/runs)
 
 # Parse run_result
