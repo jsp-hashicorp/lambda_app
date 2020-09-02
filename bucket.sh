@@ -130,7 +130,6 @@ else
 fi
 
 buildkite-agent meta-data set "workspaceid" $workspace_id
-
 echo "Here is the get"
 
 workspace_id=$(buildkite-agent meta-data get '"workspaceid"')
@@ -172,7 +171,7 @@ EOF
 #sedDelim=$(printf '\001')
 
 # Do a run
-sed "s/workspace_id/$workspace_id/" < run.template.json  > run.json
+sed "s/workspace_id/${workspace_id}/" < run.template.json  > run.json
 run_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --data @run.json https://${address}/api/v2/runs)
 
 # Parse run_result
@@ -181,9 +180,10 @@ run_id=$(echo $run_result | jq -r .data.id)
 
 echo "Run ID: " $run_id
 
-buildkite-agent meta-data set "runid" $run_id
+#buildkite-agent meta-data set "runid" $run_id
 
-run_id=$(buildkite-agent meta-data get "runid")
+#run_id=$(buildkite-agent meta-data get $run_id)
+run_id =$run_id
 
 #echo "Doing Apply"
 #apply_result=$(curl -s --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" --data @apply.json https://${address}/api/v2/runs/${run_id}/actions/apply)
