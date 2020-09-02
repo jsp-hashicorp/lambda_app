@@ -5,7 +5,7 @@ resource "null_resource" "zip_file" {
   }
 
   provisioner "local-exec" {
-    command = "zip example.zip ../example/main.js"
+    command = "gunzip example.zip ../example/main.js"
   }
 }
 
