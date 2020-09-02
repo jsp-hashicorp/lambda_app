@@ -7,7 +7,9 @@
 # no hard-mandatory violations of Sentinel policies, does an apply.
 # If an apply is done, the script waits for it to finish and then
 # downloads the apply log and the before and after state files.
-
+export TFE_ORG="snapshot_tf_serverless"
+export TFE_TOKEN="fU6YgcpG6yHxqA.atlasv1.sFPeVdPWNeMOozahdpCL4kEnuWOfy25FjIYlz68S18i5yf9p4gZqwz3ltvyR6skwNUA"
+export TFE_WORKSPACE="s3-bucket-workspace"
 # Make sure TFE_TOKEN and TFE_ORG environment variables are set
 # to owners team token and organization name for the respective
 # TFE environment. TFE_ADDR should be set to the FQDN/URL of the private
@@ -60,7 +62,6 @@ workspace="workspace-from-api"
 sleep_duration=5
 
 
-
 config_dir="."
 
 # Set workspace if provided as the second argument
@@ -90,6 +91,23 @@ fi
 #  echo "override not set on command line. Will not override."
 #fi
 override="no"
+
+# Write out workspace.template.json
+cat > workspace.template.json <<EOF
+{
+  "data":
+  {
+    "attributes": {
+      "name":"placeholder",
+      "terraform-version": "0.11.14"
+    },
+    "type":"workspaces"
+  }
+}
+EOF
+
+#Set name of workspace in workspace.json
+sed "s/placeholder/${workspace}/" < workspace.template.json > workspace.json
 
 # Check to see if the workspace already exists
 echo "Checking to see if workspace exists"
