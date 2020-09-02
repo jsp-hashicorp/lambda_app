@@ -1,6 +1,6 @@
 provider "aws" {
-   region = "ap-nothing-2"
-   
+   region = "ap-northeast-2"
+
 }
 
 variable "code_version" {
