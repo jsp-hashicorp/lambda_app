@@ -130,7 +130,7 @@ else
 fi
 
 buildkite-agent meta-data set "workspaceid" $workspace_id
-
+echo  "$(buildkite-agent meta-data set "workspaceid" $workspace_id)"
 echo "Here is the get"
 #workspace_id=$(buildkite-agent meta-data get $workspace_id)
 workspace_id = $workspace_id
