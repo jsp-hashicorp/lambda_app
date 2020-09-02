@@ -21,6 +21,13 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Zip example folder contents
         run: zip -qq -r -j ./exampl.zip ./example/*
+      - name: Upload to S3
+        run:
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ${{ secrets.AWS_REGION }}
+          zip_file: example.zip
         
       - name: Terraform Format
         id: fmt
