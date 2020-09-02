@@ -6,22 +6,22 @@ steps:
     label: "Bucket check"
     env:
       TFE_ORG: "snapshot_tf_serverless"
-      TFE_TOKEN: "fU6YgcpG6yHxqA.atlasv1.sFPeVdPWNeMOozahdpCL4kEnuWOfy25FjIYlz68S18i5yf9p4gZqwz3ltvyR6skwNUA"
+      TFE_TOKEN: "fU6YgcpG6yHxqA.atlasv1."
       TFE_WORKSPACE: "s3-bucket-workspace"
 
   - command: "upload.sh"
     label: "Upload"
     env:
-      AWS_ACCESS_KEY_ID: "ASIA2LEU5EPEAAUBV6HF"
-      AWS_SESSION_TOKEN: "IQoJb3JpZ2luX2VjEJf//////////wEaCXVzLWVhc3QtMSJHMEUCIBcoAlzORDEwc9V+vS/kiZLlqHn5uhnr9unHnfQFgRyoAiEA916I/P98fOJMFIISy/rEpgp7RyTkHVdKWabxdnDg9/Yq9QMIj///////////ARAAGgw3MTExMjkzNzU2ODgiDGiyYncfzyw2h9IWzyrJAxZNz8wYml09lCjVe/ZrZkn+rmlJob+QM5bsNez7c+h63ire1F4v1yLDHMS2UKYwLreFx6ICsYpXPr1l0Kx/G4Z+hLIjC6dBJC3ybyW5Tqi7f7HRsFkKc+HWg/4lzzmvvOA6JO13QyBgwLDCwQ23A4IdIAcJ1JGDJPvCQlrgsOPMDV5nUbxyNGQ77EOvqQMWijBGcf5Y1TljmC6dBkipeKrjZfcK3qK77Ebg7PQON/IMgXVbnHLeJlcsP0bQVpt5nuEKNbc9eOAt6HioExttCZyNm7AMjReB8SMetfiY+8AYML9EkQM5FGliuAdQL/fyE9vVnQ5kZglClxAtGajzLP4jwzCcD8S+2rkSdQvIWQPZQojFn/1g4FPe2yy54shcgB+OhJprHd/gH2+UUFayGxJkjkwpTxiJrZB8CXkt2wy3Ptwgda5bQGglESeU49S2S9c4HOp21U9aW1gqOwojaJAZrXECuWv9JLSBtt83RBCVbjL2MDiAGFgGf8laSpLZC5BU7uwu4CjF/DarmzNaZ8MNovm/ib821tor5hX8+JJYGHxeRSroRu2XnChv3uVMxJ3tNchVk47W601HPQJW0MVSuSLzN/5Iy5gw4c2++gU6nQHGLJRjjYYyFQkWmij2drnzy1MPw74kel4wBoyB1+x4etW2SolLm6OLNFwZe6J9Co3uBXrHQ7gMGtrNfDy3C+RNKgAcQHVbj0yhNvGyWwBpP+5Dwoi/9hGnPNvMChyQ07jT7hm240fUMUwocsazAtisAblNUFre2zLVd7rQIOtfYDxpf8gXYYQPOPqn16TD8D+sUFix45ZmlAktv0kB"
-      AWS_SECRET_ACCESS_KEY: "o+7AbmIrSWVbqXA/mpNrJhkuHhl8BoZNbAw0uXxj"
+      AWS_ACCESS_KEY_ID: ""
+      AWS_SESSION_TOKEN: "
+      AWS_SECRET_ACCESS_KEY: ""
      # AWS_SESSION_EXPIRATION: 1599069759
 
   - command: "tf_workspace.sh"
     label: "Plan"
     env:
       TFE_ORG: "snapshot_tf_serverless"
-      TFE_TOKEN: "fU6YgcpG6yHxqA.atlasv1.sFPeVdPWNeMOozahdpCL4kEnuWOfy25FjIYlz68S18i5yf9p4gZqwz3ltvyR6skwNUA"
+      TFE_TOKEN: "fU6YgcpG6yHxqA.atlasv1."
       TFE_WORKSPACE: "lambda-workspace"
 
   - block: "Check Plan and Approve"
@@ -30,5 +30,5 @@ steps:
     label: "Run"
     env:
       TFE_ORG: "snapshot_tf_serverless"
-      TFE_TOKEN: "fU6YgcpG6yHxqA.atlasv1.sFPeVdPWNeMOozahdpCL4kEnuWOfy25FjIYlz68S18i5yf9p4gZqwz3ltvyR6skwNUA"
+      TFE_TOKEN: "fU6YgcpG6yHxqA.atlasv1."
       TFE_WORKSPACE: "lambda-workspace"
