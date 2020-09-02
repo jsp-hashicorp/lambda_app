@@ -1,5 +1,5 @@
 provider "aws" {
-   region = "ap-south-2"
+   region = "ap-northeast-2"
 }
 
 variable "code_version" {
