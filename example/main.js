@@ -6,7 +6,7 @@ exports.handler = function (event, context, callback) {
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
     },
-    body: '<p>Hello 1_0_5 </p>',
+    body: '<p>안녕하세요..... 버전은 1_0_6입니다.</p>',
   }
   callback(null, response)
 }

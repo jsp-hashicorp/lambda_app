@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "lambda-bucket" {
   }
 }
 
-# Archive a single file.
+# Archive 
 
 data "archive_file" "init" {
   type        = "zip"
@@ -24,29 +24,15 @@ data "archive_file" "init" {
   output_path = "./example.zip"
 }
 
-/*
-resource "null_resource" "zip_file" {
-  depends_on = [aws_s3_bucket.lambda-bucket]
- triggers = {
-    always_run = "${timestamp()}"
-  }
-
-  provisioner "local-exec" {
-    command = "zip example.zip ../example/main.js"
-  }
+variable "code_version" {
+ value = "1_0_6"   
 }
-*/
-
+# Upload lambda app to S3 bucket
 resource "aws_s3_bucket_object" "object" {
   depends_on = [aws_s3_bucket.lambda-bucket]
   bucket = aws_s3_bucket.lambda-bucket.bucket
   key    = "v${var.code_version}/example.zip"
   source = "./example.zip"
-
-  # The filemd5() function is available in Terraform 0.11.12 and later
-  # For Terraform 0.11.11 and earlier, use the md5() function and the file() function:
-  # etag = "${md5(file("path/to/file"))}"
- # etag = filemd5("./example.zip")
 }
 
 
