@@ -1,3 +1,21 @@
+
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+
+  backend "remote" {
+    organization = "snapshot_tf_serverless"
+
+    workspaces {
+      name = "lambda-app"
+    }
+  }
+}
+
+
 provider "aws" {
   version = "~> 3.0"
   region  = "ap-northeast-2"
