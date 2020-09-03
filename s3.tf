@@ -48,3 +48,8 @@ resource "aws_s3_bucket_object" "object" {
   # etag = "${md5(file("path/to/file"))}"
  # etag = filemd5("./example.zip")
 }
+
+
+output "code_version" {
+  value = var.code_version
+}
