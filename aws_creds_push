@@ -1,1 +1,0 @@
-alias awstfcpush="doormat --smoke-test || doormat -r && doormat aws -a se_demos_dev --tf-push --tf-organization snapshot_tf_serverless --tf-workspace s3-bucket-workspace,lambda-workspace
