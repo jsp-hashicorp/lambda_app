@@ -20,7 +20,7 @@ resource "aws_s3_bucket" "lambda-bucket" {
 
 data "archive_file" "init" {
   type        = "zip"
-  source_file = "../example/main.js"
+  source_file = "./example/main.js"
   output_path = "./example.zip"
 }
 
