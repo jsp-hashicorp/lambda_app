@@ -25,8 +25,10 @@ data "archive_file" "init" {
 }
 
 variable "code_version" {
- default = 1_0_6   
+  type = string
+  default = "1_0_6"
 }
+
 # Upload lambda app to S3 bucket
 resource "aws_s3_bucket_object" "object" {
   depends_on = [aws_s3_bucket.lambda-bucket]
