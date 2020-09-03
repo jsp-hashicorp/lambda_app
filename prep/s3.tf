@@ -39,7 +39,7 @@ resource "null_resource" "zip_file" {
 
 resource "aws_s3_bucket_object" "object" {
  # depends_on = [archive_file.init]
-  bucket = "jsp-lambda-code-bucket"
+  bucket = aws_s3_bucket.lambda-bucket.bucket
   key    = "v${var.code_version}/example.zip"
   source = "./example.zip"
 

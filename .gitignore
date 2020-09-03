@@ -5,3 +5,4 @@ example.zip
 pipeline.yml
 prep/test/
 prep/.terraform/
+awstfspush
