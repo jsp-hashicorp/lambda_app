@@ -1,11 +1,9 @@
-
 terraform {
   required_providers {
     aws = {
       source = "hashicorp/aws"
     }
   }
-
   backend "remote" {
     organization = "snapshot_tf_serverless"
 
@@ -14,7 +12,6 @@ terraform {
     }
   }
 }
-
 
 provider "aws" {
   version = "~> 3.0"
