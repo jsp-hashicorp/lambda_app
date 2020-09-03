@@ -19,8 +19,7 @@ jobs:
         with:
           # terraform_version: 0.13.0:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-          args: '-var="code_version = ${{ secrets.CODE_VERSION }}"'
-         
+
       - name: Terraform Format
         id: fmt
         run: terraform fmt -check
