@@ -24,10 +24,6 @@ data "archive_file" "init" {
   output_path = "./example.zip"
 }
 
-variable "code_version" {
-  type = string
-  default = "1_0_6"
-}
 
 # Upload lambda app to S3 bucket
 resource "aws_s3_bucket_object" "object" {
