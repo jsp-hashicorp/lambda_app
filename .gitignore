@@ -1,5 +1,6 @@
 *.tfstate
 *.tfstate.backup
+*.code-workspace
 .terrraform/
 example.zip
 pipeline.yml
