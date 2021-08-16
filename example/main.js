@@ -6,7 +6,7 @@ exports.handler = function (event, context, callback) {
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
     },
-    body: '<p>AWS Serverless Deployment Sample</p><p>Welcome..... This is Version 2_2_5.</p>',
+    body: '<p>AWS Serverless Deployment Sample</p><p>Welcome.....  This is Version 2_2_5.</p>',
   }
   callback(null, response)
 }
