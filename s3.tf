@@ -28,9 +28,9 @@ resource "aws_s3_bucket" "lambda-bucket" {
   }
 }
 
-resource "aws_s3_bucket" "lambda-bucket" {
-  bucket = "jsp-lambda-code-bucket"
-  aws_s3_bucket_acl= "private"
+resource "aws_s3_bucket_acl" "lambda-bucket" {
+  bucket = aws_s3_bucket.lambda-bucket.id
+  acl= "private"
 }
 
 # Archive 
