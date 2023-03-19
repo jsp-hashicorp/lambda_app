@@ -21,7 +21,7 @@ provider "aws" {
 provider "archive" {}
 
 resource "aws_s3_bucket" "lambda-bucket" {
-  bucket = "jsp-lambda-code-bucket"
+  bucket = "jsp-lambda-code-bucket1"
   tags = {
     Name        = "jsp@hashicorp.com"
     Environment = "Dev"
