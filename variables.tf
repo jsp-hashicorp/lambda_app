@@ -1,4 +1,4 @@
 variable "code_version" {
   type = string
-  default = "2_3_5"
+  default = "2_3_6"
 }
